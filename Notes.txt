@@ -1,0 +1,97 @@
+- Regular Expressions (Now you have two problems)
+    - I like the idea of going through the existing linqpad "slides" for the beginning of the talk. The part where I talk about Friedl's book, show the "magic" gif, "one thing" (formerly "two things"), etc.
+    
+- Do the opening linqpad slides, ending with "One Thing". (tweaking as necessary)
+
+- One Thing
+    - A regular expression is a tree structure.
+    - Consists of a parent node with one or more child nodes.
+
+    - If you speak OOO, the node interface looks something like this:
+        public interface IRegexNode
+        {
+            IParseResult Parse(string inputText, int index);
+        }
+        
+        Where IParseResult looks something like this:
+        
+        public interface IParseResult
+        {
+            public bool Success { get; }
+        }
+
+- Nodes fall in one of three categories:
+    - No children.
+    - One or more children.
+    - Exactly one child.
+    
+- The simplest possible example consists of two nodes: one container node (one-to-many children) and one leaf node (no children).
+
+    - The first leaf node: Character Literal
+        - The Parse method checks to see if the character at the specified index has the same value as the node.
+        - LINQPad Demo: live code a simple version of this node.
+        - Case-sensitive by default, can me case-insensitive.
+        - LINQPad Demo: add case-insensitive option.
+
+    - The first container node: Regex
+        - There is always exactly one.
+        - Talk about container behaviour.
+        - All children must match successfully in sequence.
+        - LINQPad demo: live code a simple version of this node.
+            public IParseResult Parse(string inputText, int index)
+            {
+                var childIndex = index;
+            
+                foreach (var child in this.Children)
+                {
+                    var childResult = child.Parse(inputText, childIndex);
+                    
+                    if (!childResult.Success)
+                    {
+                        return ParseResult.Fail;
+                    }
+                    
+                    // TODO: figure out how to increment childIndex.
+                }
+                
+                return ParseResult.Success;
+            }
+
+- Single Character Matchers
+    - Character class
+    - Negated character class
+    - Dot
+    - Shorthands
+        - \d, \D, \s, \S, \w, \W
+
+- Quantifiers
+    - Has exactly one child node.
+    - Answers the question: has my child node successfully matched a valid number of times?
+    - LINQPad Demo: live code a simple version of this node.
+        public IParseResult Parse(string inputText, int index)
+        {
+            ParseResult childResult;
+            int matchCount = 0;
+            
+            do
+            {
+                childResult = Child.Parse(inputText, childIndex);
+                
+                if (childResult.Success)
+                {
+                    matchCount++;
+                    
+                    // TODO: figure out how to update childIndex
+                }
+            } while (childResult.Success && matchCount <= _maxMatchCount);
+            
+            if (matchCount >= _minMatchCount && matchCount <= _maxMatchCount)
+            {
+                return ParseResult.Success;
+            }
+            
+            return ParseResult.Fail;
+        }
+    - Greedy vs. Lazy
+    - LINQPad Demo: modify greedy quantifier (change the while condition to look at _minMatchCount)
+        while (childResult.Success && matchCount <= _minMatchCount);
