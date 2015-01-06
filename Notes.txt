@@ -57,12 +57,26 @@
                 return ParseResult.Success;
             }
 
-- Single Character Matchers
+- Leaf Nodes: Single Character Matchers
     - Character class
     - Negated character class
     - Dot
     - Shorthands
         - \d, \D, \s, \S, \w, \W
+
+- Container Nodes
+    - All container nodes behave like the top-level Regex node.
+    - Two of three flavors:
+        - Non-capturing (*exactly* like top-level Regex node).
+        - Capturing: Remember the value you matched and make it available later.
+            - Leaf Node: Backreference
+                - Works with capturing parenthesis.
+                - \1, \2, etc.
+            - Depending on your language, the capture values may be available after regex evaluation.
+
+- Alternation Node
+    - Two or more child nodes.
+    - Picks the first one that matches the input text at the given index.
 
 - Quantifiers
     - Has exactly one child node.
@@ -93,5 +107,5 @@
             return ParseResult.Fail;
         }
     - Greedy vs. Lazy
-    - LINQPad Demo: modify greedy quantifier (change the while condition to look at _minMatchCount)
+    - LINQPad Demo: modify greedy quantifier (change the while condition to look at _minMatchCount instead of _maxMatchCount)
         while (childResult.Success && matchCount <= _minMatchCount);
