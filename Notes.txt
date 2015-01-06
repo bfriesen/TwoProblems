@@ -18,6 +18,7 @@
         public interface IParseResult
         {
             public bool Success { get; }
+            public int Length { get; }
         }
 
 - Nodes fall in one of three categories:
@@ -30,7 +31,7 @@
     - The first leaf node: Character Literal
         - The Parse method checks to see if the character at the specified index has the same value as the node.
         - LINQPad Demo: live code a simple version of this node.
-        - Case-sensitive by default, can me case-insensitive.
+        - Case-sensitive by default, can be case-insensitive.
         - LINQPad Demo: add case-insensitive option.
 
     - The first container node: Regex
@@ -51,10 +52,10 @@
                         return ParseResult.Fail;
                     }
                     
-                    // TODO: figure out how to increment childIndex.
+                    childIndex += childResult.Length;
                 }
                 
-                return ParseResult.Success;
+                return ParseResult.Success(index, index - childIndex);
             }
 
 - Leaf Nodes: Single Character Matchers
@@ -64,19 +65,21 @@
     - Shorthands
         - \d, \D, \s, \S, \w, \W
 
+- Alternation Node
+    - Two or more child nodes.
+    - Picks the first one that matches the input text at the given index.
+
 - Container Nodes
-    - All container nodes behave like the top-level Regex node.
+    - All container nodes behave like the top-level Regex node, with minor variations.
     - Two of three flavors:
-        - Non-capturing (*exactly* like top-level Regex node).
-        - Capturing: Remember the value you matched and make it available later.
+        - Non-capturing
+        - Capturing
+            - Same as non-capturing but remembers the value that matched and makes it available later.
             - Leaf Node: Backreference
                 - Works with capturing parenthesis.
                 - \1, \2, etc.
             - Depending on your language, the capture values may be available after regex evaluation.
-
-- Alternation Node
-    - Two or more child nodes.
-    - Picks the first one that matches the input text at the given index.
+            - LINQPad example: access capture groups from regex Match.
 
 - Quantifiers
     - Has exactly one child node.
@@ -85,6 +88,7 @@
         public IParseResult Parse(string inputText, int index)
         {
             ParseResult childResult;
+            var childIndex = index;
             int matchCount = 0;
             
             do
@@ -94,14 +98,13 @@
                 if (childResult.Success)
                 {
                     matchCount++;
-                    
-                    // TODO: figure out how to update childIndex
+                    childIndex += childResult.Length;
                 }
             } while (childResult.Success && matchCount <= _maxMatchCount);
             
             if (matchCount >= _minMatchCount && matchCount <= _maxMatchCount)
             {
-                return ParseResult.Success;
+                return ParseResult.Success(index, childin - index);
             }
             
             return ParseResult.Fail;
