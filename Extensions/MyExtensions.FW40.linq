@@ -25,17 +25,16 @@ public static class MyExtensions
                 Util.RawHtml(new XElement("h2", new XAttribute("align", "center"), "brian.friesen@gmail.com")).Dump();
                 break;
             case 2:
-                Util.RawHtml(new XElement("h1", new XAttribute("align", "center"), "Quicken Loans")).Dump();
-                Util.RawHtml(new XElement("img", new XAttribute("src", Path.Combine(Path.GetDirectoryName(Util.CurrentQueryPath), "number_one.jpg")), new XAttribute("height", "300"))).Dump();
+//                Util.RawHtml(new XElement("h1", new XAttribute("align", "center"), "Quicken Loans")).Dump();
+                Util.RawHtml(new XElement("img", new XAttribute("src", Path.Combine(Path.GetDirectoryName(Util.CurrentQueryPath), "engineered_to_amaze.jpg"))/*, new XAttribute("height", "300")*/)).Dump();
 //                Util.RawHtml(new XElement("h2", new XAttribute("align", "center"), "(we're hiring!)")).Dump();
                 break;
             case 2001:
                 Util.RawHtml(new XElement("h2", new XAttribute("align", "center"), "github.com/QuickenLoans/RegExpose")).Dump();
-                Util.RawHtml(new XElement("h2", new XAttribute("align", "center"), "regexpose.azurewebsites.net/swagger-ui/")).Dump();
-                Util.RawHtml(new XElement("h2", new XAttribute("align", "center"), "linqpad.net")).Dump();
+                Util.RawHtml(new XElement("h2", new XAttribute("align", "center"), "gist.github.com/bfriesen - OneThing.cs")).Dump();
                 break;
             case 3:
-                Util.RawHtml(new XElement("h1", new XAttribute("align", "center"), "Why?")).Dump();
+                Util.RawHtml(new XElement("h1", new XAttribute("align", "center"), "Why am I doing this?")).Dump();
                 break;
             case 4:
                 Util.RawHtml(new XElement("h1", new XAttribute("align", "center"), "When I Discovered Regular Expressions")).Dump();
@@ -44,8 +43,7 @@ public static class MyExtensions
                 // http://thecodinglove.com/post/41360804381/when-i-discovered-regular-expressions
                 break;
             case 5:
-                Util.RawHtml(new XElement("h1", new XAttribute("align", "center"), "What?")).Dump();
-                Util.RawHtml(new XElement("h2", new XAttribute("align", "center"), "(as in \"what's in it for you?\")")).Dump();
+                Util.RawHtml(new XElement("h1", new XAttribute("align", "center"), "What can you expect to learn today?")).Dump();
                 break;
             case 6:
                 Util.RawHtml(new XElement("h1", new XAttribute("align", "center"), "Mastering Regular Expressions")).Dump();
@@ -53,11 +51,10 @@ public static class MyExtensions
                 Util.RawHtml(new XElement("img", new XAttribute("src", Path.Combine(Path.GetDirectoryName(Util.CurrentQueryPath), "regex_friedl.jpg")), new XAttribute("height", "300"))).Dump();
                 break;
             case 7:
-                Util.RawHtml(new XElement("h1", new XAttribute("align", "center"), "Two Things")).Dump();
+                Util.RawHtml(new XElement("h1", new XAttribute("align", "center"), "The one thing you need to know.")).Dump();
                 break;
             case 8:
-                Util.RawHtml(new XElement("h1", new XAttribute("align", "center"), "Regular Expressions Are Hierarchical")).Dump();
-                Util.RawHtml(new XElement("h2", new XAttribute("align", "center"), "(they have a tree structure)")).Dump();
+                Util.RawHtml(new XElement("h1", new XAttribute("align", "center"), "A regular expressions is a tree.")).Dump();
                 break;
             case 9:
                 "".RunRegExpose(@"abc");
