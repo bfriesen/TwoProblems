@@ -7,6 +7,8 @@ void Main()
 
 public bool ValidateEmail(string email)
 {
+    #region Lots of ugly code.
+
     bool isParsingLocalPart = true;
     bool isParsingHostName = false;
     bool isParsingDotCom = false;
@@ -76,4 +78,6 @@ public bool ValidateEmail(string email)
     }
     
     return false;
+    
+    #endregion
 }

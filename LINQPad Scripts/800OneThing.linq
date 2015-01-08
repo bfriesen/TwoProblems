@@ -54,11 +54,15 @@ public class CharacterLiteral : IRegexNode
     
     public ParseResult Parse(string input, int index)
     {
+        // Begin Parse - Character Literal
+    
         if (index < input.Length && input[index] == this.LiteralValue)
         {
+            // Pass - Character Literal
             return ParseResult.Pass(index, 1);
         }
         
+        // Fail - Character Literal
         return ParseResult.Fail();
     }
     
@@ -78,6 +82,8 @@ public class Expression : IRegexNode
     
     public ParseResult Parse(string input, int index)
     {
+        // Begin Parse - Regex
+    
         int workingIndex = index;
         
         foreach (IRegexNode node in this.Nodes)
@@ -86,12 +92,15 @@ public class Expression : IRegexNode
             
             if (!result.Success)
             {
+                // Fail - Regex
                 return ParseResult.Fail();
             }
             
+            // Advance Index - <node type>
             workingIndex = workingIndex + result.Length;
         }
         
+        // Match - Regex
         return ParseResult.Pass(index, workingIndex - index);
     }
     
@@ -119,6 +128,8 @@ public class Regex
             {
                 return new MatchResult(result, input);
             }
+            
+            // Advance Index - Regex
         }
         
         return new MatchResult(ParseResult.Fail(), input);
@@ -151,6 +162,8 @@ public class MatchResult : ParseResult
     
     #endregion
 }
+
+#endregion
 
 #region
 
@@ -366,7 +379,5 @@ public class AnchorEnd : IRegexNode
         }
     }
 }
-
-#endregion
 
 #endregion

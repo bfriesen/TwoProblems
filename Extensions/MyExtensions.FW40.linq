@@ -1,5 +1,7 @@
 <Query Kind="Program" />
 
+
+#region
 void Main()
 {
     
@@ -282,3 +284,4 @@ public static class MyExtensions
         }
     }
 }
+#endregion
